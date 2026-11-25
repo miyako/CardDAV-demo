@@ -1,0 +1,816 @@
+{
+	"$4d": {
+		"version": "1",
+		"kind": "form"
+	},
+	"windowSizingX": "fixed",
+	"windowSizingY": "fixed",
+	"windowMinWidth": 1260,
+	"windowMinHeight": 840,
+	"windowMaxWidth": 1260,
+	"windowMaxHeight": 840,
+	"width": 1260,
+	"height": 840,
+	"events": [
+		"onLoad",
+		"onUnload"
+	],
+	"windowTitle": "CardDAV — Studio",
+	"destination": "detailScreen",
+	"method": "method.4dm",
+	"pages": [
+		{
+			"objects": {
+				"canvas": {
+					"type": "rectangle",
+					"left": 0,
+					"top": 0,
+					"width": 1260,
+					"height": 840,
+					"fill": "automatic",
+					"stroke": "transparent"
+				}
+			}
+		},
+		{
+			"objects": {
+				"title": {
+					"type": "input",
+					"left": 604,
+					"top": 240,
+					"width": 192,
+					"height": 26,
+					"dataSource": "Form.title",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"subtitle": {
+					"type": "text",
+					"left": 24,
+					"top": 54,
+					"width": 760,
+					"height": 20,
+					"text": "Point it at your own server — discovery, conditional CRUD, and the raw vCard the server actually stores",
+					"class": "appSubtitle"
+				},
+				"badge": {
+					"type": "text",
+					"left": 820,
+					"top": 24,
+					"width": 416,
+					"height": 22,
+					"text": "resolving…",
+					"class": "badge",
+					"textAlign": "right"
+				},
+				"rule": {
+					"type": "rectangle",
+					"left": 24,
+					"top": 86,
+					"width": 1212,
+					"height": 1,
+					"stroke": "transparent",
+					"class": "rule"
+				},
+				"s1": {
+					"type": "text",
+					"left": 24,
+					"top": 100,
+					"width": 372,
+					"height": 18,
+					"text": "1 · SERVER",
+					"class": "section"
+				},
+				"lblEndpoint": {
+					"type": "text",
+					"left": 24,
+					"top": 122,
+					"width": 372,
+					"height": 16,
+					"text": "Endpoint — HTTPS is the trust anchor",
+					"class": "label"
+				},
+				"endpoint": {
+					"type": "input",
+					"left": 24,
+					"top": 140,
+					"width": 372,
+					"height": 26,
+					"dataSource": "Form.endpoint",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"lblUser": {
+					"type": "text",
+					"left": 24,
+					"top": 172,
+					"width": 180,
+					"height": 16,
+					"text": "Username (optional)",
+					"class": "label"
+				},
+				"lblPassword": {
+					"type": "text",
+					"left": 212,
+					"top": 172,
+					"width": 184,
+					"height": 16,
+					"text": "App password (memory only)",
+					"class": "label"
+				},
+				"username": {
+					"type": "input",
+					"left": 24,
+					"top": 190,
+					"width": 180,
+					"height": 26,
+					"dataSource": "Form.username",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"password": {
+					"type": "input",
+					"left": 212,
+					"top": 190,
+					"width": 184,
+					"height": 26,
+					"dataSource": "Form.password",
+					"class": "field",
+					"fontFamily": "%password"
+				},
+				"btnDiscover": {
+					"type": "button",
+					"left": 24,
+					"top": 224,
+					"width": 150,
+					"height": 30,
+					"text": "Discover",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnProbe": {
+					"type": "button",
+					"left": 182,
+					"top": 224,
+					"width": 214,
+					"height": 30,
+					"text": "Anonymous probe",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"discoveryText": {
+					"type": "input",
+					"left": 24,
+					"top": 262,
+					"width": 372,
+					"height": 64,
+					"dataSource": "Form.discoveryText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"s2": {
+					"type": "text",
+					"left": 24,
+					"top": 334,
+					"width": 372,
+					"height": 18,
+					"text": "2 · ADDRESS BOOKS",
+					"class": "section"
+				},
+				"bookList": {
+					"type": "listbox",
+					"left": 24,
+					"top": 356,
+					"width": 372,
+					"height": 96,
+					"dataSource": "Form.bookRows",
+					"currentItemSource": "Form.selectedBook",
+					"selectionMode": "single",
+					"resizingMode": "legacy",
+					"rowHeight": "26px",
+					"headerHeight": "24px",
+					"borderStyle": "solid",
+					"class": "list",
+					"scrollbarVertical": "automatic",
+					"alternateFill": "automaticAlternate",
+					"events": [
+						"onClick"
+					],
+					"columns": [
+						{
+							"name": "Book",
+							"dataSource": "This.displayName",
+							"width": 190,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "vCard",
+							"dataSource": "This.versions",
+							"width": 70,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "URL",
+							"dataSource": "This.url",
+							"width": 100,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						}
+					]
+				},
+				"bookURL": {
+					"type": "input",
+					"left": 24,
+					"top": 458,
+					"width": 372,
+					"height": 26,
+					"dataSource": "Form.bookURL",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"s3": {
+					"type": "text",
+					"left": 24,
+					"top": 492,
+					"width": 372,
+					"height": 18,
+					"text": "3 · CONTACTS",
+					"class": "section"
+				},
+				"filterProperty": {
+					"type": "input",
+					"left": 24,
+					"top": 514,
+					"width": 180,
+					"height": 26,
+					"dataSource": "Form.filterProperty",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"matchType": {
+					"type": "input",
+					"left": 212,
+					"top": 514,
+					"width": 184,
+					"height": 26,
+					"dataSource": "Form.matchType",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"hintFilter": {
+					"type": "text",
+					"left": 24,
+					"top": 542,
+					"width": 372,
+					"height": 16,
+					"text": "property: FN N EMAIL TEL ORG UID NOTE TITLE URL · match: contains equals starts-with ends-with",
+					"class": "hint"
+				},
+				"filterText": {
+					"type": "input",
+					"left": 24,
+					"top": 562,
+					"width": 250,
+					"height": 26,
+					"dataSource": "Form.filterText",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"limit": {
+					"type": "input",
+					"left": 282,
+					"top": 562,
+					"width": 114,
+					"height": 26,
+					"dataSource": "Form.limit",
+					"dataSourceTypeHint": "number",
+					"class": "field"
+				},
+				"btnQuery": {
+					"type": "button",
+					"left": 24,
+					"top": 596,
+					"width": 120,
+					"height": 30,
+					"text": "Query",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"url": {
+					"type": "input",
+					"left": 24,
+					"top": 634,
+					"width": 372,
+					"height": 26,
+					"dataSource": "Form.url",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"etag": {
+					"type": "input",
+					"left": 24,
+					"top": 664,
+					"width": 372,
+					"height": 26,
+					"dataSource": "Form.etag",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"contactList": {
+					"type": "listbox",
+					"left": 24,
+					"top": 696,
+					"width": 372,
+					"height": 88,
+					"dataSource": "Form.contactRows",
+					"currentItemSource": "Form.selectedContact",
+					"selectionMode": "single",
+					"resizingMode": "legacy",
+					"rowHeight": "26px",
+					"headerHeight": "24px",
+					"borderStyle": "solid",
+					"class": "list",
+					"scrollbarVertical": "automatic",
+					"alternateFill": "automaticAlternate",
+					"events": [
+						"onClick"
+					],
+					"columns": [
+						{
+							"name": "Name",
+							"dataSource": "This.name",
+							"width": 170,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "vCard",
+							"dataSource": "This.version",
+							"width": 56,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "ETag",
+							"dataSource": "This.shortETag",
+							"width": 130,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						}
+					]
+				},
+				"btnGet": {
+					"type": "button",
+					"left": 24,
+					"top": 788,
+					"width": 84,
+					"height": 30,
+					"text": "GET",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnCreate": {
+					"type": "button",
+					"left": 116,
+					"top": 788,
+					"width": 84,
+					"height": 30,
+					"text": "Create",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnUpdate": {
+					"type": "button",
+					"left": 208,
+					"top": 788,
+					"width": 88,
+					"height": 30,
+					"text": "Update",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnDelete": {
+					"type": "button",
+					"left": 304,
+					"top": 788,
+					"width": 92,
+					"height": 30,
+					"text": "Delete",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"s4": {
+					"type": "text",
+					"left": 416,
+					"top": 100,
+					"width": 380,
+					"height": 18,
+					"text": "4 · DRAFT CONTACT",
+					"class": "section"
+				},
+				"lblFN": {
+					"type": "text",
+					"left": 416,
+					"top": 122,
+					"width": 380,
+					"height": 16,
+					"text": "Formatted name (FN)",
+					"class": "label"
+				},
+				"formattedName": {
+					"type": "input",
+					"left": 416,
+					"top": 140,
+					"width": 380,
+					"height": 26,
+					"dataSource": "Form.formattedName",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"lblName": {
+					"type": "text",
+					"left": 416,
+					"top": 172,
+					"width": 380,
+					"height": 16,
+					"text": "Family / given name",
+					"class": "label"
+				},
+				"familyName": {
+					"type": "input",
+					"left": 416,
+					"top": 190,
+					"width": 184,
+					"height": 26,
+					"dataSource": "Form.familyName",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"givenName": {
+					"type": "input",
+					"left": 604,
+					"top": 190,
+					"width": 192,
+					"height": 26,
+					"dataSource": "Form.givenName",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"lblOrg": {
+					"type": "text",
+					"left": 416,
+					"top": 222,
+					"width": 380,
+					"height": 16,
+					"text": "Organization / title",
+					"class": "label"
+				},
+				"organization": {
+					"type": "input",
+					"left": 416,
+					"top": 240,
+					"width": 184,
+					"height": 26,
+					"dataSource": "Form.organization",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"lblNote": {
+					"type": "text",
+					"left": 416,
+					"top": 272,
+					"width": 380,
+					"height": 16,
+					"text": "Note — commas, semicolons and newlines are escaped",
+					"class": "label"
+				},
+				"note": {
+					"type": "input",
+					"left": 416,
+					"top": 290,
+					"width": 380,
+					"height": 48,
+					"dataSource": "Form.note",
+					"class": "field",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					]
+				},
+				"lblEmail": {
+					"type": "text",
+					"left": 416,
+					"top": 342,
+					"width": 380,
+					"height": 16,
+					"text": "Email / phone",
+					"class": "label"
+				},
+				"email": {
+					"type": "input",
+					"left": 416,
+					"top": 360,
+					"width": 184,
+					"height": 26,
+					"dataSource": "Form.email",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"phone": {
+					"type": "input",
+					"left": 604,
+					"top": 360,
+					"width": 192,
+					"height": 26,
+					"dataSource": "Form.phone",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"lblVersion": {
+					"type": "text",
+					"left": 416,
+					"top": 392,
+					"width": 96,
+					"height": 16,
+					"text": "vCard version",
+					"class": "label"
+				},
+				"versionChoice": {
+					"type": "input",
+					"left": 416,
+					"top": 408,
+					"width": 96,
+					"height": 26,
+					"dataSource": "Form.versionChoice",
+					"dataSourceTypeHint": "text",
+					"class": "field"
+				},
+				"btnBuild": {
+					"type": "button",
+					"left": 520,
+					"top": 406,
+					"width": 110,
+					"height": 30,
+					"text": "Build",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnRoundTrip": {
+					"type": "button",
+					"left": 636,
+					"top": 406,
+					"width": 160,
+					"height": 30,
+					"text": "Round-trip → loss",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnParse": {
+					"type": "button",
+					"left": 416,
+					"top": 440,
+					"width": 110,
+					"height": 30,
+					"text": "Parse raw",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnSeed": {
+					"type": "button",
+					"left": 532,
+					"top": 440,
+					"width": 120,
+					"height": 30,
+					"text": "Server card",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"s5": {
+					"type": "text",
+					"left": 416,
+					"top": 478,
+					"width": 380,
+					"height": 18,
+					"text": "5 · RAW vCARD — WHAT UPDATE SENDS",
+					"class": "section"
+				},
+				"rawEditor": {
+					"type": "input",
+					"left": 416,
+					"top": 500,
+					"width": 380,
+					"height": 150,
+					"dataSource": "Form.rawEditor",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					]
+				},
+				"auditText": {
+					"type": "text",
+					"left": 416,
+					"top": 654,
+					"width": 380,
+					"height": 16,
+					"text": "",
+					"class": "hint"
+				},
+				"lblFidelity": {
+					"type": "text",
+					"left": 416,
+					"top": 674,
+					"width": 380,
+					"height": 16,
+					"text": "Fidelity / loss",
+					"class": "label"
+				},
+				"fidelityText": {
+					"type": "input",
+					"left": 416,
+					"top": 692,
+					"width": 380,
+					"height": 58,
+					"dataSource": "Form.fidelityText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"lblStatus": {
+					"type": "text",
+					"left": 416,
+					"top": 754,
+					"width": 380,
+					"height": 16,
+					"text": "Status",
+					"class": "label"
+				},
+				"statusText": {
+					"type": "input",
+					"left": 416,
+					"top": 772,
+					"width": 380,
+					"height": 44,
+					"dataSource": "Form.statusText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"s6": {
+					"type": "text",
+					"left": 820,
+					"top": 100,
+					"width": 436,
+					"height": 18,
+					"text": "6 · PARSE — PROPERTIES THE CLI SEES",
+					"class": "section"
+				},
+				"parseText": {
+					"type": "input",
+					"left": 820,
+					"top": 122,
+					"width": 436,
+					"height": 150,
+					"dataSource": "Form.parseText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"s7": {
+					"type": "text",
+					"left": 820,
+					"top": 280,
+					"width": 436,
+					"height": 18,
+					"text": "7 · COMPONENT ENVELOPE (UNEDITED)",
+					"class": "section"
+				},
+				"envelopeText": {
+					"type": "input",
+					"left": 820,
+					"top": 302,
+					"width": 436,
+					"height": 240,
+					"dataSource": "Form.envelopeText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"s8": {
+					"type": "text",
+					"left": 820,
+					"top": 550,
+					"width": 436,
+					"height": 18,
+					"text": "8 · WHAT IS REAL HERE",
+					"class": "section"
+				},
+				"notesText": {
+					"type": "input",
+					"left": 820,
+					"top": 572,
+					"width": 436,
+					"height": 246,
+					"dataSource": "Form.notesText",
+					"class": "hint",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				}
+			}
+		}
+	]
+}

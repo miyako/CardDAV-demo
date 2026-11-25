@@ -1,0 +1,9 @@
+{
+	"version": 2102,
+	"dependencies": {
+		"CardDAV": {
+			"github": "miyako/CardDAV",
+			"tag": "0.1.2"
+		}
+	}
+}

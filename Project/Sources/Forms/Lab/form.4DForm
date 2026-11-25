@@ -1,0 +1,422 @@
+{
+	"$4d": {
+		"version": "1",
+		"kind": "form"
+	},
+	"windowSizingX": "fixed",
+	"windowSizingY": "fixed",
+	"windowMinWidth": 1120,
+	"windowMinHeight": 800,
+	"windowMaxWidth": 1120,
+	"windowMaxHeight": 800,
+	"width": 1120,
+	"height": 800,
+	"events": [
+		"onLoad",
+		"onUnload"
+	],
+	"windowTitle": "CardDAV — vCard Lab",
+	"destination": "detailScreen",
+	"method": "method.4dm",
+	"pages": [
+		{
+			"objects": {
+				"canvas": {
+					"type": "rectangle",
+					"left": 0,
+					"top": 0,
+					"width": 1120,
+					"height": 800,
+					"fill": "automatic",
+					"stroke": "transparent"
+				}
+			}
+		},
+		{
+			"objects": {
+				"title": {
+					"type": "text",
+					"left": 24,
+					"top": 16,
+					"width": 420,
+					"height": 34,
+					"text": "vCard Lab",
+					"class": "appTitle"
+				},
+				"subtitle": {
+					"type": "text",
+					"left": 24,
+					"top": 54,
+					"width": 780,
+					"height": 20,
+					"text": "Five cards, one lossy rebuild, and a catalogue of refusals — all offline",
+					"class": "appSubtitle"
+				},
+				"badge": {
+					"type": "text",
+					"left": 820,
+					"top": 24,
+					"width": 276,
+					"height": 22,
+					"text": "",
+					"class": "badge",
+					"textAlign": "right"
+				},
+				"rule": {
+					"type": "rectangle",
+					"left": 24,
+					"top": 86,
+					"width": 1072,
+					"height": 1,
+					"stroke": "transparent",
+					"class": "rule"
+				},
+				"s1": {
+					"type": "text",
+					"left": 24,
+					"top": 100,
+					"width": 380,
+					"height": 18,
+					"text": "BUILD PRESETS",
+					"class": "section"
+				},
+				"presetList": {
+					"type": "listbox",
+					"left": 24,
+					"top": 122,
+					"width": 380,
+					"height": 220,
+					"dataSource": "Form.presetRows",
+					"currentItemSource": "Form.selectedPreset",
+					"selectionMode": "single",
+					"resizingMode": "legacy",
+					"rowHeight": "26px",
+					"headerHeight": "24px",
+					"borderStyle": "solid",
+					"class": "list",
+					"scrollbarVertical": "automatic",
+					"alternateFill": "automaticAlternate",
+					"events": [
+						"onClick"
+					],
+					"columns": [
+						{
+							"name": "Preset",
+							"dataSource": "This.name",
+							"width": 150,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "vCard",
+							"dataSource": "This.version",
+							"width": 54,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "Verdict",
+							"dataSource": "This.verdict",
+							"width": 64,
+							"truncateMode": "none",
+							"textAlign": "center",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "Audit line",
+							"dataSource": "This.auditLine",
+							"width": 230,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						}
+					]
+				},
+				"btnRun": {
+					"type": "button",
+					"left": 24,
+					"top": 350,
+					"width": 100,
+					"height": 30,
+					"text": "Show",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnRunAll": {
+					"type": "button",
+					"left": 132,
+					"top": 350,
+					"width": 100,
+					"height": 30,
+					"text": "Run all",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"btnStudio": {
+					"type": "button",
+					"left": 240,
+					"top": 350,
+					"width": 164,
+					"height": 30,
+					"text": "Open Studio",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"s2": {
+					"type": "text",
+					"left": 24,
+					"top": 392,
+					"width": 380,
+					"height": 18,
+					"text": "BUILD OUTPUT",
+					"class": "section"
+				},
+				"previewView": {
+					"type": "input",
+					"left": 24,
+					"top": 414,
+					"width": 380,
+					"height": 190,
+					"dataSource": "Form.previewText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"auditText": {
+					"type": "input",
+					"left": 24,
+					"top": 610,
+					"width": 380,
+					"height": 32,
+					"dataSource": "Form.auditText",
+					"class": "hint",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"lblNote": {
+					"type": "text",
+					"left": 24,
+					"top": 648,
+					"width": 380,
+					"height": 16,
+					"text": "Why this card",
+					"class": "label"
+				},
+				"noteText": {
+					"type": "input",
+					"left": 24,
+					"top": 666,
+					"width": 380,
+					"height": 52,
+					"dataSource": "Form.noteText",
+					"class": "hint",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"summaryText": {
+					"type": "input",
+					"left": 24,
+					"top": 724,
+					"width": 380,
+					"height": 46,
+					"dataSource": "Form.summaryText",
+					"class": "hint",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"s3": {
+					"type": "text",
+					"left": 432,
+					"top": 100,
+					"width": 664,
+					"height": 18,
+					"text": "FIDELITY — WHAT A REBUILD DROPS",
+					"class": "section"
+				},
+				"lossView": {
+					"type": "input",
+					"left": 432,
+					"top": 122,
+					"width": 664,
+					"height": 110,
+					"dataSource": "Form.lossText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"s4": {
+					"type": "text",
+					"left": 432,
+					"top": 240,
+					"width": 664,
+					"height": 18,
+					"text": "REFUSAL CATALOGUE — EXPECTED VS ACTUAL",
+					"class": "section"
+				},
+				"checkList": {
+					"type": "listbox",
+					"left": 432,
+					"top": 262,
+					"width": 664,
+					"height": 230,
+					"dataSource": "Form.checkRows",
+					"currentItemSource": "Form.selectedCheck",
+					"selectionMode": "single",
+					"resizingMode": "legacy",
+					"rowHeight": "26px",
+					"headerHeight": "24px",
+					"borderStyle": "solid",
+					"class": "list",
+					"scrollbarVertical": "automatic",
+					"alternateFill": "automaticAlternate",
+					"events": [
+						"onClick"
+					],
+					"columns": [
+						{
+							"name": "Scenario",
+							"dataSource": "This.id",
+							"width": 220,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "Layer",
+							"dataSource": "This.layer",
+							"width": 90,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "Expected",
+							"dataSource": "This.expect",
+							"width": 120,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "Actual",
+							"dataSource": "This.actual",
+							"width": 120,
+							"truncateMode": "none",
+							"textAlign": "left",
+							"verticalAlign": "middle"
+						},
+						{
+							"name": "Verdict",
+							"dataSource": "This.verdict",
+							"width": 80,
+							"truncateMode": "none",
+							"textAlign": "center",
+							"verticalAlign": "middle"
+						}
+					]
+				},
+				"btnAtlas": {
+					"type": "button",
+					"left": 432,
+					"top": 500,
+					"width": 150,
+					"height": 30,
+					"text": "Run catalogue",
+					"style": "roundedBevel",
+					"class": "secondary",
+					"events": [
+						"onClick"
+					]
+				},
+				"s5": {
+					"type": "text",
+					"left": 432,
+					"top": 540,
+					"width": 664,
+					"height": 18,
+					"text": "DETAIL",
+					"class": "section"
+				},
+				"detailView": {
+					"type": "input",
+					"left": 432,
+					"top": 562,
+					"width": 664,
+					"height": 140,
+					"dataSource": "Form.detailText",
+					"class": "console",
+					"multiline": "yes",
+					"wordwrap": "normal",
+					"scrollbarVertical": "automatic",
+					"events": [
+						"onDataChange"
+					],
+					"enterable": false,
+					"focusable": true,
+					"hideFocusRing": true,
+					"borderStyle": "none"
+				},
+				"closingText": {
+					"type": "text",
+					"left": 432,
+					"top": 710,
+					"width": 664,
+					"height": 60,
+					"text": "Each catalogue row records the code the actual layer returned for input that layer rejects before any network request. Component rows never launch a process (invalid_argument); CLI rows return invalid_request / invalid_vcard / unsupported_version / unsafe_url with exit code 1; the prelaunch row is refused by _CLI before spawning (unsupported_architecture). Nothing here is mocked, and nothing here touches the network.",
+					"class": "hint"
+				}
+			}
+		}
+	]
+}

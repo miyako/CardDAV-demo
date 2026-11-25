@@ -1,0 +1,5 @@
+* text=auto eol=lf
+
+*.png binary
+*.4DZ binary
+*.dylib binary
