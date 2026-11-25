@@ -77,19 +77,21 @@ scripts/smoke.sh /tmp/report.json
 
 The smoke method only performs calls that need no socket: `version()`, `parse()`,
 `build()`, the round-trip loss report and the whole atlas. It also loads both
-forms and checks that every object the form methods dispatch on exists.
+forms and checks that every object the form methods dispatch on exists. The
+report carries a `gates` object — one Boolean per lesson — so a failed run names
+the lesson instead of leaving you to diff envelopes.
 
 Current result on macOS 27.2.1 arm64, 4D 21.2 LTS build 21.100694, interpreted:
 
 ```
-55 of 55 checks passed
+65 of 65 checks passed
 ```
 
 Report at `/tmp/CardDAV-demo-smoke.json`; `scripts/verify.py` asserts it.
 
 | Check | Status |
 | --- | --- |
-| Interpreted headless run, offline lessons (55 assertions) | `passed` |
+| Interpreted headless run, offline lessons (65 assertions) | `passed` |
 | `.4DForm` load + every dispatched object present | `passed` |
 | 4D compilation of this project | `not_run` |
 | Live discovery / query / CRUD against a real CardDAV server | `not_run` — needs credentials |

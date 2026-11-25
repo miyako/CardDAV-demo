@@ -66,6 +66,8 @@ def main():
     check("4.0 build escapes a semicolon",
           build4.get("escapedSemicolon") is True)
     check("4.0 build escapes a newline", build4.get("escapedNewline") is True)
+    check("4.0 build still parses into the properties panel",
+          (build4.get("properties") or 0) >= 5, build4.get("properties"))
     physical = lines_of(vcard)
     check("no physical line exceeds 75 octets",
           all(len(line.encode("utf-8")) <= 75 for line in physical),
@@ -102,6 +104,11 @@ def main():
     seen_layers = {row.get("layer") for row in atlas}
     check("catalogue covers component and CLI layers",
           {"component", "cli", "prelaunch"} <= seen_layers, sorted(seen_layers))
+
+    gates = report.get("gates", {})
+    if gates:
+        for name in sorted(gates):
+            check(f"gate {name}", gates[name] is True, gates[name])
 
     forms = report.get("forms", {})
     for name in ("Studio", "Lab"):

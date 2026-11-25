@@ -27,7 +27,7 @@ ARRAY TEXT($names; 0)
 ARRAY TEXT($types; 0)
 var $formName; $need : Text
 var $loaded; $formOK : Boolean
-var $objects : Object
+var $objects; $gates : Object
 
 $config:=New object("out"; "/tmp/CardDAV-demo-smoke.json")
 If (Get database parameter(User param value; $text)=0)
@@ -41,12 +41,14 @@ End if
 
 $ok:=True
 $report:=New object("compiled"; Is compiled mode)
+$gates:=New object
 
 // ------------------------------------------------------------- component
 $studio:=cs.Studio.new()
 $lab:=cs.Lab.new()
 $report.component:=New object("version"; $studio.versionText; "ok"; ($studio.versionText#""); "code"; $studio.code($studio.lastResult))
-If ($studio.versionText="unavailable")
+$gates.component:=($studio.versionText#"unavailable")
+If (Not($gates.component))
 	$ok:=False
 End if
 
@@ -57,7 +59,8 @@ $report.studio:=New object
 $report.studio.versionLabel:=$fields.versionText
 $sample:=New object("ok"; $studio.lastResult.ok; "lossless"; $studio.losslessOK; "properties"; $studio.properties.length; "audit"; $studio.cardText.audit($fields.rawEditor))
 $report.studio.sample:=$sample
-If (Not($studio.losslessOK))
+$gates.sample:=$studio.losslessOK
+If (Not($gates.sample))
 	$ok:=False
 End if
 
@@ -73,13 +76,13 @@ If ($result#Null)
 	$build4.escapedComma:=(Position("\\,"; $fields.rawEditor; 1; *)>0)
 	$build4.escapedSemicolon:=(Position("\\;"; $fields.rawEditor; 1; *)>0)
 	$build4.escapedNewline:=(Position("\\n"; $fields.rawEditor; 1; *)>0)
-	If ((Not($result.ok)) | (Not($build4.crlfOk)) | (Not($build4.foldingOk)) | (Not($build4.escapedNewline)))
-		$ok:=False
-	End if
-	If ($studio.properties.length<5)
+	$build4.properties:=$studio.properties.length
+	$gates.build4:=$result.ok & $build4.crlfOk & $build4.foldingOk & $build4.escapedNewline & ($studio.properties.length>=5)
+	If (Not($gates.build4))
 		$ok:=False
 	End if
 Else
+	$gates.build4:=False
 	$ok:=False
 End if
 $report.studio.build4:=$build4
@@ -89,11 +92,13 @@ $build3:=New object("ok"; False; "code"; "not_run")
 $result:=$lab.client.build(New object("formattedName"; "Miyako Yamada"); "3.0")
 If ($result.ok)
 	$build3:=New object("ok"; True; "code"; "ok"; "uid"; $result.value.uid; "generatedUID"; (Position("URN:UUID:"; Uppercase($result.value.vcard); 1; *)>0); "emptyStructuredN"; (Position("N:;;;;"; $result.value.vcard; 1; *)>0))
-	If ((Not($build3.generatedUID)) | (Not($build3.emptyStructuredN)))
+	$gates.build3:=$build3.generatedUID & $build3.emptyStructuredN
+	If (Not($gates.build3))
 		$ok:=False
 	End if
 Else
 	$build3:=New object("ok"; False; "code"; $lab.code($result))
+	$gates.build3:=False
 	$ok:=False
 End if
 $report.studio.build3:=$build3
@@ -104,10 +109,12 @@ $result:=$studio.roundTrip($fields)
 $report.studio.roundTrip:=New object("ok"; False; "code"; "not_run"; "fidelity"; $studio.fidelityText; "status"; $studio.statusText; "envelope"; $studio.envelopeText)
 If ($result#Null)
 	$report.studio.roundTrip:=New object("ok"; $result.ok; "code"; $studio.code($result); "fidelity"; $studio.fidelityText; "lostNamed"; (Position("Dropped by rebuilding"; $studio.fidelityText; 1; *)>0))
-	If ((Not($result.ok)) | (Not($report.studio.roundTrip.lostNamed)))
+	$gates.roundTrip:=$result.ok & $report.studio.roundTrip.lostNamed
+	If (Not($gates.roundTrip))
 		$ok:=False
 	End if
 Else
+	$gates.roundTrip:=False
 	$ok:=False
 End if
 
@@ -125,7 +132,8 @@ For each ($row; $rows)
 		$lostOK:=True
 	End if
 End for each
-If ((Not($presetsOK)) | (Not($lostOK)))
+$gates.presets:=$presetsOK & $lostOK
+If (Not($gates.presets))
 	$ok:=False
 End if
 $report.lab.presetCount:=$rows.length
@@ -141,7 +149,8 @@ For each ($row; $rows)
 		$failures:=$failures+1
 	End if
 End for each
-If (Not($atlasOK))
+$gates.atlas:=$atlasOK
+If (Not($gates.atlas))
 	$ok:=False
 End if
 $report.lab.summary:=$lab.summary($rows)
@@ -181,11 +190,13 @@ For each ($formName; New collection("Studio"; "Lab"))
 	End if
 	$objects.ok:=$formOK
 	$report.forms[$formName]:=$objects
+	$gates[$formName]:=$formOK
 	If (Not($formOK))
 		$ok:=False
 	End if
 End for each
 
+$report.gates:=$gates
 $report.passed:=$ok & ($failures=0)
 $report.offlineOnly:=True
 
