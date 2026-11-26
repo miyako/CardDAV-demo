@@ -62,7 +62,7 @@ The component is declared in `Project/Sources/dependencies.json` and installs
 through 4D's Dependency manager:
 
 ```json
-{"version": 2100, "dependencies": {"CardDAV": {"github": "miyako/CardDAV", "tag": "0.1.2"}}}
+{"version": 2102, "dependencies": {"CardDAV": {"github": "miyako/CardDAV", "tag": "0.1.2"}}}
 ```
 
 ## Headless acceptance
@@ -84,14 +84,14 @@ the lesson instead of leaving you to diff envelopes.
 Current result on macOS 27.2.1 arm64, 4D 21.2 LTS build 21.100694, interpreted:
 
 ```
-65 of 65 checks passed
+66 of 66 checks passed
 ```
 
 Report at `/tmp/CardDAV-demo-smoke.json`; `scripts/verify.py` asserts it.
 
 | Check | Status |
 | --- | --- |
-| Interpreted headless run, offline lessons (65 assertions) | `passed` |
+| Interpreted headless run, offline lessons (66 assertions) | `passed` |
 | `.4DForm` load + every dispatched object present | `passed` |
 | 4D compilation of this project | `not_run` |
 | Live discovery / query / CRUD against a real CardDAV server | `not_run` — needs credentials |

@@ -97,7 +97,7 @@
 					"scrollbarVertical": "automatic",
 					"alternateFill": "automaticAlternate",
 					"events": [
-						"onClick"
+						"onSelectionChange"
 					],
 					"columns": [
 						{
@@ -321,7 +321,7 @@
 					"scrollbarVertical": "automatic",
 					"alternateFill": "automaticAlternate",
 					"events": [
-						"onClick"
+						"onSelectionChange"
 					],
 					"columns": [
 						{

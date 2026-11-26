@@ -70,7 +70,7 @@ def listbox(name, left, top, width, height, source, current, columns,
         "borderStyle": "solid", "class": cls,
         "scrollbarVertical": "automatic",
         "alternateFill": "automaticAlternate",
-        "events": ["onClick"],
+        "events": ["onSelectionChange"],
         "columns": columns,
     }
 

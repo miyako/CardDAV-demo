@@ -31,10 +31,6 @@ Case of
 					$scene.roundTrip(Form)
 				: ($clicked="btnSeed")
 					$scene.seedServerCard(Form)
-				: ($clicked="bookList")
-					$scene.selectBook(Form; Form.selectedBook)
-				: ($clicked="contactList")
-					$scene.selectContact(Form; Form.selectedContact)
 				: ($clicked="btnGet")
 					$scene.get(Form)
 				: ($clicked="btnCreate")
@@ -43,6 +39,19 @@ Case of
 					$scene.update(Form)
 				: ($clicked="btnDelete")
 					$scene.delete(Form)
+			End case
+		End if
+
+	: (FORM Event.code=On Selection Change)
+		// List boxes react to selection, not to clicks, so the arrow keys work too.
+		If (Value type(Form.scene)=Is object)
+			$scene:=Form.scene
+			$clicked:=FORM Event.objectName
+			Case of
+				: ($clicked="bookList")
+					$scene.selectBook(Form; Form.selectedBook)
+				: ($clicked="contactList")
+					$scene.selectContact(Form; Form.selectedContact)
 			End case
 		End if
 End case

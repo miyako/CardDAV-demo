@@ -59,7 +59,9 @@ $report.studio:=New object
 $report.studio.versionLabel:=$fields.versionText
 $sample:=New object("ok"; $studio.lastResult.ok; "lossless"; $studio.losslessOK; "properties"; $studio.properties.length; "audit"; $studio.cardText.audit($fields.rawEditor))
 $report.studio.sample:=$sample
-$gates.sample:=$studio.losslessOK
+// 4D's = ignores case; the lossless check must not.
+$sample.strictCompare:=($studio.cardText.sameText("FN:Miyako"; "FN:Miyako")) & (Not($studio.cardText.sameText("FN:Miyako"; "FN:miyako"))) & (Not($studio.cardText.sameText("e"; "é")))
+$gates.sample:=$studio.losslessOK & $sample.strictCompare
 If (Not($gates.sample))
 	$ok:=False
 End if

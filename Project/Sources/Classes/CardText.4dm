@@ -23,6 +23,19 @@ Function octets($text : Variant)->$octets : Integer
 	TEXT TO BLOB(String($text); $blob; UTF8 text format)
 	$octets:=BLOB size($blob)
 
+// Exact equality. 4D's = on Text ignores case and diacritics, so it would call
+// "FN:Miyako" and "FN:miyako" the same. The lossless claim is about bytes:
+// compare the length and the SHA-256 of the UTF-8 octets instead.
+Function sameText($a : Variant; $b : Variant)->$same : Boolean
+	$same:=False
+	If ((Value type($a)#Is text) | (Value type($b)#Is text))
+		return $same
+	End if
+	If (This.octets($a)#This.octets($b))
+		return $same
+	End if
+	$same:=(Generate digest(String($a); SHA256 digest)=Generate digest(String($b); SHA256 digest))
+
 // Physical lines, split on CRLF or bare CR/LF. A trailing terminator does not
 // create an empty last line.
 Function lines($text : Variant)->$lines : Collection

@@ -13,18 +13,26 @@ Case of
 		If (Value type(Form.lab)=Is object)
 			$lab:=Form.lab
 			Case of
-				: (FORM Event.objectName="presetList")
-					$lab.selectPreset(Form)
 				: (FORM Event.objectName="btnRun")
 					$lab.selectPreset(Form)
 				: (FORM Event.objectName="btnRunAll")
 					$lab.runAllInto(Form)
 				: (FORM Event.objectName="btnAtlas")
 					$lab.atlasInto(Form)
-				: (FORM Event.objectName="checkList")
-					$lab.detailInto(Form)
 				: (FORM Event.objectName="btnStudio")
 					Demo_OpenStudio()
+			End case
+		End if
+
+	: (FORM Event.code=On Selection Change)
+		// List boxes react to selection, not to clicks, so the arrow keys work too.
+		If (Value type(Form.lab)=Is object)
+			$lab:=Form.lab
+			Case of
+				: (FORM Event.objectName="presetList")
+					$lab.selectPreset(Form)
+				: (FORM Event.objectName="checkList")
+					$lab.detailInto(Form)
 			End case
 		End if
 End case

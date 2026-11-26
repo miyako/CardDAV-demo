@@ -595,9 +595,6 @@ Function rowID($row : Object)->$id : Text
 Function presetByID($id : Text)->$preset : Object
 	var $candidate : Object
 	$preset:=Null
-	If (Value type($candidate)#Is object)
-		$candidate:=Null
-	End if
 	For each ($candidate; This.presets)
 		If (Value type($candidate.id)=Is text)
 			If ($candidate.id=$id)

@@ -48,6 +48,8 @@ def main():
 
     check("sample parses", sample.get("ok") is True)
     check("sample raw Text preserved", sample.get("lossless") is True)
+    check("raw comparison is case and accent sensitive",
+          sample.get("strictCompare") is True)
     check("sample exposes 10 properties", sample.get("properties") == 10,
           sample.get("properties"))
     audit = sample.get("audit", {})

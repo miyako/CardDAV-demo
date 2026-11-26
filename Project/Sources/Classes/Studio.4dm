@@ -184,7 +184,7 @@ Function _parseInto($form : Object; $vcard : Text)
 		return
 	End if
 	This.properties:=$result.value.properties
-	This.losslessOK:=(This._text($result.value.vcard)=String($vcard))
+	This.losslessOK:=This.cardText.sameText($result.value.vcard; $vcard)
 	$text:="uid "+This._text($result.value.uid)+" · version "+This._text($result.value.version)+" · "+String(This.properties.length)+" properties"
 	If (This.losslessOK)
 		$text:=$text+" · raw Text unchanged"+Char(13)+Char(10)
@@ -292,7 +292,7 @@ Function discover($form : Object)->$result : Object
 	$result:=Null
 	$client:=This.connection($form)
 	If ($client=Null)
-		This.statusText:="enter an endpoint first, e.g. https://dav.example.org/"
+		This.statusText:=This.connectionProblem($form)
 		This.refresh($form)
 		return $result
 	End if
@@ -361,7 +361,7 @@ Function query($form : Object)->$result : Object
 	$result:=Null
 	$client:=This.connection($form)
 	If ($client=Null)
-		This.statusText:="enter an endpoint first"
+		This.statusText:=This.connectionProblem($form)
 		This.refresh($form)
 		return $result
 	End if
@@ -416,7 +416,7 @@ Function get($form : Object)->$result : Object
 	$result:=Null
 	$client:=This.connection($form)
 	If ($client=Null)
-		This.statusText:="enter an endpoint first"
+		This.statusText:=This.connectionProblem($form)
 		This.refresh($form)
 		return $result
 	End if
@@ -438,7 +438,7 @@ Function create($form : Object)->$result : Object
 	$result:=Null
 	$client:=This.connection($form)
 	If ($client=Null)
-		This.statusText:="enter an endpoint first"
+		This.statusText:=This.connectionProblem($form)
 		This.refresh($form)
 		return $result
 	End if
@@ -462,7 +462,7 @@ Function update($form : Object)->$result : Object
 	$result:=Null
 	$client:=This.connection($form)
 	If ($client=Null)
-		This.statusText:="enter an endpoint first"
+		This.statusText:=This.connectionProblem($form)
 		This.refresh($form)
 		return $result
 	End if
@@ -484,7 +484,7 @@ Function delete($form : Object)->$result : Object
 	$result:=Null
 	$client:=This.connection($form)
 	If ($client=Null)
-		This.statusText:="enter an endpoint first"
+		This.statusText:=This.connectionProblem($form)
 		This.refresh($form)
 		return $result
 	End if
@@ -506,12 +506,23 @@ Function connection($form : Object)->$client : Object
 		return $client
 	End if
 	$credentials:=New object("endpoint"; $form.endpoint)
-	If ((Length($form.username)>0) & (Length($form.password)>0))
+	If ((Length($form.username)>0) | (Length($form.password)>0))
+		If ((Length($form.username)=0) | (Length($form.password)=0))
+			// Half a credential must not quietly become an anonymous call.
+			return $client
+		End if
 		$credentials.username:=$form.username
 		$credentials.password:=$form.password
 	End if
 	$client:=cs.CardDAV.Client.new(This.target(); $credentials)
 	return $client
+
+// Why connection() returned Null.
+Function connectionProblem($form : Object)->$text : Text
+	$text:="enter an endpoint first, e.g. https://dav.example.org/"
+	If (Length($form.endpoint)>0)
+		$text:="enter both username and password, or clear both for an anonymous call"
+	End if
 
 Function contactFrom($form : Object)->$contact : Object
 	$contact:=New object
@@ -585,7 +596,7 @@ Function _liveEnvelope($form : Object; $result : Object)
 		This.statusText:="live call refused · "+This.code($result)
 	End if
 
-// UID or FN from a vCard Text without calling the CLI (listbox display).
+// FN from a vCard Text without calling the CLI (listbox display).
 Function cardName($vcard : Text)->$name : Text
 	var $lines : Collection
 	var $line : Text
